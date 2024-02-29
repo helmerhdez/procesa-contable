@@ -12,4 +12,5 @@ Before you begin, ensure you have met the following requirements:
 ## Installation and Setup
 
 ### React Frontend
-1. Navigate to the `frontend` directory:
+1. Navigate to the `frontend` directory.
+2. Navigate to the `backend` directory.
