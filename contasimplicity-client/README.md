@@ -1,16 +1,21 @@
-# ContaSimplicity
 
-ContaSimplicity is a streamlined accounting software solution designed to simplify and streamline your company's financial management. It consists of two main projects: one developed in React for the frontend and another developed in Spring Boot for the backend.
+## ContaSimplicity Client
 
-## Prerequisites
+This is the frontend client for ContaSimplicity, developed using React. It provides a user-friendly interface for managing invoices and generating tax reports.
+
+### Prerequisites
 
 Before you begin, ensure you have met the following requirements:
-- Node.js and npm installed for running the React project.
-- Java Development Kit (JDK) installed for running the Spring Boot project.
-- Maven installed for building the Spring Boot project.
+- Node.js and npm installed.
 
-## Installation and Setup
+### Installation and Setup
 
-### React Frontend
-1. Navigate to the `frontend` directory.
-2. Navigate to the `backend` directory.
+1. Clone the repository: git clone <https://github.com/helmerhdez/conta-simplicity.git>
+2. Navigate to the `contasimplicity-client` directory: cd contasimplicity-client
+3. Install dependencies: npm/pnpm/bun... install
+4. Start the development server: npm/pnpm/bun... start
+
+## Usage
+
+- Once the client is running, you can access the application at `http://localhost:3000` by default.
+
