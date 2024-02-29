@@ -11,6 +11,5 @@ Before you begin, ensure you have met the following requirements:
 
 ## Installation and Setup
 
-### React Frontend
-1. Navigate to the `frontend` directory.
-2. Navigate to the `backend` directory.
+1. Navigate to the `contasimplicity-api` directory.
+2. Navigate to the `contasimplicity-cient` directory.
