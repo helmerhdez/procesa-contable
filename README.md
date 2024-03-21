@@ -1,6 +1,6 @@
-# ContaSimplicity
+# ProcesaContable
 
-ContaSimplicity is a streamlined accounting software solution designed to simplify and streamline your company's financial management. It consists of two main projects: one developed in React for the frontend and another developed in Spring Boot for the backend.
+ProcesaContable is a streamlined accounting software solution designed to simplify and streamline your company's financial management. It consists of two main projects: one developed in React for the frontend and another developed in Spring Boot for the backend.
 
 ## Prerequisites
 
