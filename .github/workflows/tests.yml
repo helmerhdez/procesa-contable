@@ -20,6 +20,9 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
 
+      - name: Print Working Directory Contents
+        run: ls -al
+
       - name: Set up Maven
         uses: stCarolas/setup-maven@v5
         with:
