@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout project
         uses: actions/checkout@v4.1.1
+        with:
+          path: '/home/runner/work/procesa-contable/procesa-contable-api'
 
       - name: Set up JDK
         uses: actions/setup-java@v4.2.1
@@ -20,12 +22,6 @@ jobs:
           distribution: 'corretto'
           cache: 'maven'
           
-      - name: Navigate to backend directory
-        run: cd procesa-contable-api
-        
-      - name: Print Working Directory Contents
-        run: ls -al
-
       - name: Set up Maven
         uses: stCarolas/setup-maven@v5
         with:
