@@ -21,7 +21,7 @@ jobs:
           cache: 'maven'
           
       - name: Navigate to backend directory
-        run: cd $GITHUB_WORKSPACE/procesa-contable/procesa-contable-api
+        run: cd procesa-contable/procesa-contable-api
         
       - name: Print Working Directory Contents
         run: ls -al
