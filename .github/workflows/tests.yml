@@ -8,10 +8,6 @@ on:
 jobs:
   code-coverage:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      repository-projects: write
     
     steps:
       - name: Checkout project
