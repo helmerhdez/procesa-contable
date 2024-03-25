@@ -13,7 +13,7 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4.1.1
         with:
-          path: '/home/runner/work/procesa-contable/procesa-contable-api'
+          path: '/home/runner/work/procesa-contable/procesa-contable/procesa-contable-api'
 
       - name: Set up JDK
         uses: actions/setup-java@v4.2.1
