@@ -3,13 +3,13 @@ name: test
 on:
   pull_request:
     branches:
-      - feature/*
+      - develop
 
 jobs:
   tests:
     runs-on: ubuntu-latest
 
-    if: github.event.pull_request.base.ref == 'develop'
+    if: startsWith(github.event.pull_request.head.ref, 'feature/procesa-contable-api/')
 
     steps:
       - uses: actions/checkout@v3
