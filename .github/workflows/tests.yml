@@ -21,7 +21,7 @@ jobs:
           cache: 'maven'
           
       - name: Navigate to backend directory
-        run: cd procesa-contable-api/pom.xml
+        run: cd /procesa-contable-api/pom.xml
         
       - name: Print Working Directory Contents
         run: ls -al
