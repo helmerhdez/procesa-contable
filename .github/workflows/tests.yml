@@ -40,8 +40,8 @@ jobs:
         uses: madrapps/jacoco-report@v1.6.1
         with:
           paths: |
-            /home/runner/work/procesa-contable/procesa-contable/procesa-contable-api/target/test/jacocoTestReport.xml
-            /home/runner/work/procesa-contable/procesa-contable/procesa-contable-api/target/site/jacoco/jacoco.xml
+            "./procesa-contable-api/target/test/jacocoTestReport.xml
+            "./procesa-contable-api/target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Code Coverage
           min-coverage-overall: 80
