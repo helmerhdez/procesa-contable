@@ -8,6 +8,10 @@ on:
 jobs:
   code-coverage:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
     
     steps:
       - name: Checkout project
@@ -33,8 +37,8 @@ jobs:
         with:
           name: code-coverage-report
           path: |
-            ${{ github.workspace }}/procesa-contable-api/build/reports/jacoco/test/html/*
-            ${{ github.workspace }}/procesa-contable-api/target/site/jacoco/*
+            ${{ github.workspace }}/**/build/reports/jacoco/test/html/*
+            ${{ github.workspace }}/**/target/site/jacoco/*
 
       - name: Print GITHUB_WORKSPACE
         run: echo ${{ github.workspace }}
@@ -44,8 +48,8 @@ jobs:
         uses: madrapps/jacoco-report@v1.6.1
         with:
           paths: |
-            ${{ github.workspace }}/procesa-contable-api/build/reports/jacoco/test/jacocoTestReport.xml
-            ${{ github.workspace }}/procesa-contable-api/target/site/jacoco/jacoco.xml
+            ${{ github.workspace }}/**/build/reports/jacoco/test/jacocoTestReport.xml
+            ${{ github.workspace }}/**/target/site/jacoco/jacoco.xml
           token: ${{ secrets.GITHUB_TOKEN }}
           title: Code Coverage
           min-coverage-overall: 80
