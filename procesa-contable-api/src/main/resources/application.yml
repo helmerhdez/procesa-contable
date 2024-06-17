@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: procesa-contable-api
+  jackson:
+    default-property-inclusion: non_null
+    property-naming-strategy: SNAKE_CASE
+  datasource:
+    url: ${DB_HOST}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      dialect: org.hibernate.dialect.SQLServerDialect
+      ddl-auto: none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  web:
+    resources:
+      add-mappings: false
+logging:
+  level:
+    restClientLogger: WARN
+security:
+  user:
+    password: b65a6435-40e7-41cf-b2fd-d696708beb77
+  jwt:
+    secret-key: a950857d1d0fdad7c36530095af222585d990de583a5d2471d6df9bc43bde20f
+    expiration-time: 7200000
