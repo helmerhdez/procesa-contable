@@ -2,6 +2,7 @@ package com.hhcb.procesacontable.infrastructure.adapter.input.rest.user;
 
 import com.hhcb.procesacontable.application.ports.input.user.UserUseCasePort;
 import com.hhcb.procesacontable.domain.model.UserModel;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.ApiResponse;
 import com.hhcb.procesacontable.infrastructure.adapter.input.rest.user.dto.request.UserCreateRequest;
 import com.hhcb.procesacontable.infrastructure.adapter.input.rest.user.dto.response.UserResponse;
 import jakarta.validation.Valid;
@@ -23,32 +24,32 @@ public class UserController {
     private final ModelMapper modelMapper;
 
     @GetMapping()
-    public ResponseEntity<List<UserResponse>> findAll() {
-        log.info("findAll: " + userPort.findAll().toString());
-        return ResponseEntity.status(HttpStatus.OK).body(userPort.findAll().stream().map(
+    public ResponseEntity<ApiResponse<List<UserResponse>>> findAll() {
+        List<UserResponse> result = userPort.findAll().stream().map(
                 legalRepresentativeModel -> modelMapper.map(
                         legalRepresentativeModel, UserResponse.class)
-        ).toList());
+        ).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(result));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> findById(@PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                modelMapper.map(userPort.findById(id), UserResponse.class));
+    public ResponseEntity<ApiResponse<UserResponse>> findById(@PathVariable String id) {
+        UserResponse userResponse = modelMapper.map(userPort.findById(id), UserResponse.class);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(userResponse));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> update(
+    public ResponseEntity<ApiResponse<UserResponse>> update(
             @Valid @RequestBody UserCreateRequest request, @PathVariable String id) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                modelMapper.map(
-                        userPort.update(id, modelMapper.map(request, UserModel.class)),
-                        UserResponse.class));
+        UserResponse userResponse = modelMapper.map(
+                userPort.update(id, modelMapper.map(request, UserModel.class)),
+                UserResponse.class);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(userResponse));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable String id) {
+    public ResponseEntity<ApiResponse<Void>> delete(@PathVariable String id) {
         userPort.deleteById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(null));
     }
 }

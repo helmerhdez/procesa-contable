@@ -19,7 +19,7 @@ import java.util.List;
 public class ApiExceptionHandler {
 
     @ExceptionHandler({NoHandlerFoundException.class})
-    public ResponseEntity<ErrorResponse> handleNoHandlerFoundException(
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleNoHandlerFoundException(
             NoHandlerFoundException ex) {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.status(ErrorCatalog.NOT_FOUND.getStatus())
@@ -27,7 +27,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleMethodArgumentNotValidException(
             MethodArgumentNotValidException ex) {
         log.error(ex.getMessage(), ex);
         List<String> details = ex.getBindingResult().getFieldErrors().stream()
@@ -38,7 +38,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFoundException(Exception ex) {
+    public ResponseEntity<ApiResponse<ErrorResponse>> handleNotFoundException(Exception ex) {
         log.error(ex.getMessage(), ex);
         return ResponseEntity.status(ErrorCatalog.USER_NOT_FOUND.getStatus())
                 .body(ErrorResponseUtil.createErrorResponse(ErrorCatalog.USER_NOT_FOUND));
