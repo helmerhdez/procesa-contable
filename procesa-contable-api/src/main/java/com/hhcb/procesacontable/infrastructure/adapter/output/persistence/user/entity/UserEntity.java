@@ -5,6 +5,7 @@ import com.hhcb.procesacontable.infrastructure.adapter.output.persistence.role.e
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,6 +33,9 @@ public class UserEntity {
     private String name;
     @NotBlank(message = "Password cannot be blank")
     @Size(min = 6, max = 255, message = "The password must be at least 6 characters")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%?&*\\-])[A-Za-z\\d@$!%?&*\\-]{6,}$",
+            message = "Password must contain at least one special character, one uppercase letter, " +
+                    "one lowercase letter, and one digit")
     private String password;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")

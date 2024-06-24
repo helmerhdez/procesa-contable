@@ -3,6 +3,7 @@ package com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth;
 import com.hhcb.procesacontable.application.ports.input.auth.AuthUseCasePort;
 import com.hhcb.procesacontable.domain.model.AuthModel;
 import com.hhcb.procesacontable.domain.model.UserModel;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.ApiResponse;
 import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.dto.request.AuthRequest;
 import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.dto.response.AuthResponse;
 import com.hhcb.procesacontable.infrastructure.adapter.input.rest.user.dto.request.UserCreateRequest;
@@ -24,18 +25,19 @@ public class AuthenticationController {
     private final ModelMapper mapper;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(
+    public ResponseEntity<ApiResponse<AuthResponse>> register(
             @Valid @RequestBody UserCreateRequest request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                mapper.map(authPort.register(mapper.map(request, UserModel.class)), AuthResponse.class)
+        UserModel userModel = mapper.map(request, UserModel.class);
+        AuthResponse authResponse = mapper.map(authPort.register(userModel), AuthResponse.class);
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(authResponse)
         );
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> authenticate(@RequestBody AuthRequest authUser) {
+    public ResponseEntity<ApiResponse<AuthResponse>> authenticate(@RequestBody AuthRequest authUser) {
         AuthModel authModel = authPort.authenticate(mapper.map(authUser, UserModel.class));
         AuthResponse response = mapper.map(authModel, AuthResponse.class);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        return ResponseEntity.status(HttpStatus.OK).body(ApiResponse.success(response));
     }
 
 }
