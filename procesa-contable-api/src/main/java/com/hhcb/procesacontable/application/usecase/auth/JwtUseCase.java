@@ -61,7 +61,8 @@ public class JwtUseCase implements JwtUseCasePort {
                 .claims(Map.of(
                         "user_id", user.getUserId(),
                         "name", user.getName(),
-                        "company", user.getCompany().getCompanyId()
+                        "company", user.getCompany().getCompanyId(),
+                        "role", user.getRole().getName()
                 ))
                 .signWith(getSigningKey())
                 .compact();
