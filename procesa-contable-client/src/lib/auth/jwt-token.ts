@@ -1,7 +1,7 @@
 import { CustomJwtPayload } from "@/types/auth/auth-types";
 import jwt from "jsonwebtoken";
 
-export const getTokenPayload = async (token: string): Promise<CustomJwtPayload | null> => {
+export const getTokenPayload = (token: string): CustomJwtPayload | null => {
     try {
         const data = jwt.decode(token) as CustomJwtPayload
         return data

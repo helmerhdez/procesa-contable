@@ -1,5 +1,6 @@
+import { DASHBOARD_ROUTE } from "@/lib/constants";
 import { redirect } from "next/navigation";
 
 export default function Home() {
-  redirect("/auth/login");
+  redirect(DASHBOARD_ROUTE);
 }

@@ -1,28 +1,29 @@
 "use client";
 
-import { login } from "@/actions/auth";
 import { CardWrapper } from "@/components/auth/CardWrapper";
-import { FormErrorAlert } from "@/components/auth/FormAlerts";
 import { EyeFilledIcon, EyeSlashFilledIcon, MailIcon } from "@/components/icons";
-import { toast } from "@/components/ui/use-toast";
-import { AuthActionType, LoginFormType } from "@/types/auth/auth-types";
+import { useAuth } from "@/context/AuthContext";
+import { DASHBOARD_ROUTE } from "@/lib/constants";
+import { LoginType } from "@/types/auth/auth-types";
 import { LoginSchema } from "@/types/auth/login-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { Button } from "../ui/button";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+
 export const LoginForm = () => {
+  const authContext = useAuth();
   const router = useRouter();
+  const { login } = authContext!;
   const [isVisible, setIsVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>("");
-  const [isPending, startTransition] = useTransition();
 
   const togleShowPassword = () => setIsVisible(!isVisible);
 
-  const form = useForm<LoginFormType>({
+  const form = useForm<LoginType>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
       email: "",
@@ -30,20 +31,20 @@ export const LoginForm = () => {
     },
   });
 
-  const onSubmit = (values: LoginFormType) => {
-    setErrorMessage("");
-
-    startTransition(() => {
-      login(values).then((data: AuthActionType) => {
-        if (data.success) {
-          toast({
-            description: data.success,
-          });
-          router.push("/dashboard");
+  const onSubmit = async (values: LoginType) => {
+    toast.promise(login(values), {
+      loading: "Iniciando sesión...",
+      success: (response) => {
+        if (response?.success) {
+          router.push(DASHBOARD_ROUTE);
+          return response?.success;
         } else {
-          setErrorMessage(data.error);
+          throw new Error(response?.error || "Error desconocido");
         }
-      });
+      },
+      error: (err) => {
+        return `Error: ${err.message}`; // Mensaje de error formateado
+      },
     });
   };
 
@@ -87,8 +88,7 @@ export const LoginForm = () => {
               )}
             ></FormField>
           </div>
-          <FormErrorAlert message={errorMessage} />
-          <Button type="submit" disabled={isPending} className="w-full">
+          <Button type="submit" className="w-full">
             Iniciar sesión
           </Button>
         </form>

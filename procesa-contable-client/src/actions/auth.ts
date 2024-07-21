@@ -3,13 +3,11 @@
 import { getTokenPayload } from "@/lib/auth/jwt-token"
 import { COOKIE_JWT_TOKEN_NAME } from "@/lib/constants"
 import { ApiResponse } from "@/types/api-types"
-import { AuthActionType, LoginSuccessType } from "@/types/auth/auth-types"
+import { AuthActionType, CustomJwtPayload, LoginSuccessType, LoginType } from "@/types/auth/auth-types"
 import { LoginSchema } from "@/types/auth/login-schema"
 import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
-import { z } from "zod"
 
-export const login = async (values: z.infer<typeof LoginSchema>): Promise<AuthActionType> => {
+export const login = async (values: LoginType): Promise<AuthActionType> => {
     const validatedFields = LoginSchema.safeParse(values)
     if (!validatedFields.success) { return { error: "Campos no validos" } }
 
@@ -18,8 +16,9 @@ export const login = async (values: z.infer<typeof LoginSchema>): Promise<AuthAc
             method: "POST",
             body: JSON.stringify(validatedFields.data),
             headers: {
-                "Content-Type": "application/json",
-            },
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
         });
 
         const responseData: ApiResponse<LoginSuccessType> = await response.json();
@@ -28,25 +27,31 @@ export const login = async (values: z.infer<typeof LoginSchema>): Promise<AuthAc
         const token = responseData.data?.token!;
         const tokenData = await getTokenPayload(token);
         cookies().set(COOKIE_JWT_TOKEN_NAME, token, { expires: new Date(tokenData?.exp! * 1000), httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' });
-        return { success: "Inicio de sesión exitoso!" };
+        return { success: "Inicio de sesión exitoso, redirigiendo...", user: tokenData! };
 
     } catch (error) {
         return { error: "Error al iniciar sesión" };
     }
 }
 
-export const logout = async () => {
-    const cookiesStore = cookies();
-    cookiesStore.delete(COOKIE_JWT_TOKEN_NAME);
-    return redirect('/auth/login');
+export const logout = async (): Promise<boolean> => {
+    try {
+        cookies().delete(COOKIE_JWT_TOKEN_NAME);
+        return true
+    } catch (error) {
+        return false
+    }
 };
 
-export const getUserData = async () => {
-    const token = cookies().get(COOKIE_JWT_TOKEN_NAME);
-    if (!token) throw new Error('No se encontró el token');
+export const getUserData = async (): Promise<CustomJwtPayload | null> => {
+    try {
+        const token = cookies().get(COOKIE_JWT_TOKEN_NAME);
+        if (!token) throw new Error('No se encontró el token');
 
-    const tokenData = await getTokenPayload(token.value);
-    if (!tokenData) throw new Error('Token inválido');
-
-    return tokenData;
+        const tokenData = await getTokenPayload(token.value);
+        if (!tokenData) throw new Error('Token inválido');
+        return tokenData;
+    } catch {
+        return null
+    }
 };

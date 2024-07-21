@@ -1,10 +1,10 @@
 package com.hhcb.procesacontable.infrastructure.config;
 
-import com.hhcb.procesacontable.application.ports.input.user.UserDetailUseCasePort;
-import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.filter.CustomAccessDeniedHandler;
-import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.filter.CustomAuthenticationEntryPoint;
-import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.filter.JwtAuthenticationFilter;
-import lombok.AllArgsConstructor;
+import com.hhcb.procesacontable.application.ports.output.UserPersistencePort;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.filter.CustomAccessDeniedHandler;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.filter.CustomAuthenticationEntryPoint;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.filter.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,9 +25,9 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserDetailUseCasePort userDetailUseCase;
+    private final UserPersistencePort userPersistencePort;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -41,7 +41,7 @@ public class SecurityConfig {
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
-                ).userDetailsService(userDetailUseCase)
+                ).userDetailsService(userPersistencePort)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

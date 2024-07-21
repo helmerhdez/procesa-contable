@@ -46,7 +46,7 @@ export const EyeSlashFilledIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const MaterialSymbolsBrightnessAlertOutline = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" {...props}>
       <path
         fillRule="evenodd"
         d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 0 0 0 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 0 0 .01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"
@@ -58,7 +58,7 @@ export const MaterialSymbolsBrightnessAlertOutline = (props: SVGProps<SVGSVGElem
 
 export const ClaritySuccessStandardSolid = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" {...props}>
       <path fill="currentColor" d="M18 2a16 16 0 1 0 16 16A16 16 0 0 0 18 2m10.45 10.63L15.31 25.76L7.55 18a1.4 1.4 0 0 1 2-2l5.78 5.78l11.14-11.13a1.4 1.4 0 1 1 2 2Z" className="clr-i-solid clr-i-solid-path-1" />
       <path fill="none" d="M0 0h36v36H0z" />
     </svg>
@@ -67,7 +67,7 @@ export const ClaritySuccessStandardSolid = (props: SVGProps<SVGSVGElement>) => {
 
 export const HomeIcom = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20 19v-8.5a1 1 0 0 0-.4-.8l-7-5.25a1 1 0 0 0-1.2 0l-7 5.25a1 1 0 0 0-.4.8V19a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1" />
     </svg>
   );
@@ -75,7 +75,7 @@ export const HomeIcom = (props: SVGProps<SVGSVGElement>) => {
 
 export const CheckIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="currentColor" d="m9.55 17.308l-4.97-4.97l.714-.713l4.256 4.256l9.156-9.156l.713.714z" />
     </svg>
   );
@@ -83,7 +83,7 @@ export const CheckIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const ChevronRightIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="currentColor" d="M12.6 12L8.7 8.1q-.275-.275-.275-.7t.275-.7t.7-.275t.7.275l4.6 4.6q.15.15.213.325t.062.375t-.062.375t-.213.325l-4.6 4.6q-.275.275-.7.275t-.7-.275t-.275-.7t.275-.7z" />
     </svg>
   );
@@ -91,7 +91,7 @@ export const ChevronRightIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const ChevronDownIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="currentColor" d="M7.41 8.58L12 13.17l4.59-4.59L18 10l-6 6l-6-6z" />
     </svg>
   );
@@ -99,7 +99,7 @@ export const ChevronDownIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const DotFilledIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 15 15" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" {...props}>
       <path fill="currentColor" d="M9.875 7.5a2.375 2.375 0 1 1-4.75 0a2.375 2.375 0 0 1 4.75 0" />
     </svg>
   );
@@ -107,23 +107,15 @@ export const DotFilledIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const OrderDotsVerticalFilled = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="currentColor" d="M16 17a2 2 0 1 1 0 4a2 2 0 0 1 0-4m-8 0a2 2 0 1 1 0 4a2 2 0 0 1 0-4m8-7a2 2 0 1 1 0 4a2 2 0 0 1 0-4m-8 0a2 2 0 1 1 0 4a2 2 0 0 1 0-4m8-7a2 2 0 1 1 0 4a2 2 0 0 1 0-4M8 3a2 2 0 1 1 0 4a2 2 0 0 1 0-4" />
-    </svg>
-  );
-};
-
-export const UploadIcon = (props: SVGProps<SVGSVGElement>) => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
-      <path fill="currentColor" d="M11 16V7.85l-2.6 2.6L7 9l5-5l5 5l-1.4 1.45l-2.6-2.6V16zm-5 4q-.825 0-1.412-.587T4 18v-3h2v3h12v-3h2v3q0 .825-.587 1.413T18 20z" />
     </svg>
   );
 };
 
 export const InvoiceFilledIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" {...props}>
       <path fill="currentColor" d="M3 5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v7h3v2a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3zm11 11a2 2 0 0 0 2-2v-1h-2zM6.5 6a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1z" />
     </svg>
   );
@@ -131,7 +123,7 @@ export const InvoiceFilledIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const DotsHorizontalIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="currentColor" d="M16 12a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2m-6 0a2 2 0 0 1 2-2a2 2 0 0 1 2 2a2 2 0 0 1-2 2a2 2 0 0 1-2-2" />
     </svg>
   );
@@ -139,7 +131,7 @@ export const DotsHorizontalIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const SlashIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 5L7 19" />
     </svg>
   );
@@ -147,7 +139,7 @@ export const SlashIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const SunIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...props}>
       <g fill="none">
         <path
           fillRule="evenodd"
@@ -162,7 +154,7 @@ export const SunIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const MoonIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 15 15" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" {...props}>
       <path
         fill="currentColor"
         fillRule="evenodd"
@@ -175,8 +167,65 @@ export const MoonIcon = (props: SVGProps<SVGSVGElement>) => {
 
 export const CrossIcon = (props: SVGProps<SVGSVGElement>) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16" {...props}>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" {...props}>
       <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="m11.25 4.75l-6.5 6.5m0-6.5l6.5 6.5" />
+    </svg>
+  );
+};
+
+export const DownloadIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" {...props}>
+      <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m6.5 10.5l4 4.232l4-4.191m-4-7.041v11m-6 3h12" />
+    </svg>
+  );
+};
+
+export const UploadIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 21" {...props}>
+      <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m6.5 7.753l4-4.232l4 4.191m-4-4.212v11m-6 3h12" />
+    </svg>
+  );
+};
+
+export const FileUploadIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" color="currentColor">
+        <path d="M12.5 2h.273c3.26 0 4.892 0 6.024.798c.324.228.612.5.855.805c.848 1.066.848 2.6.848 5.67v2.545c0 2.963 0 4.445-.469 5.628c-.754 1.903-2.348 3.403-4.37 4.113c-1.257.441-2.83.441-5.98.441c-1.798 0-2.698 0-3.416-.252c-1.155-.406-2.066-1.263-2.497-2.35c-.268-.676-.268-1.523-.268-3.216V12" />
+        <path d="M20.5 12a3.333 3.333 0 0 1-3.333 3.333c-.666 0-1.451-.116-2.098.057a1.67 1.67 0 0 0-1.179 1.179c-.173.647-.057 1.432-.057 2.098A3.333 3.333 0 0 1 10.5 22m-6-17.5C4.992 3.994 6.3 2 7 2m2.5 2.5C9.008 3.994 7.7 2 7 2m0 0v8" />
+      </g>
+    </svg>
+  );
+};
+
+export const XmlIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" {...props}>
+      <g fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" color="currentColor">
+        <path d="m7 13l1.647 2.5m0 0l1.647 2.5m-1.647-2.5l1.647-2.5m-1.647 2.5L7 18m14 0h-.823c-.777 0-1.165 0-1.406-.244c-.242-.244-.242-.637-.242-1.423V13m-6.176 5l.342-4.165c.029-.354.043-.53.15-.563s.216.105.435.382l.873 1.104c.119.15.178.225.257.225s.139-.075.257-.225l.874-1.105c.218-.276.328-.415.434-.382c.107.033.122.21.151.563L16.471 18" />
+        <path d="M15 22h-4.273c-3.26 0-4.892 0-6.024-.798a4.1 4.1 0 0 1-.855-.805C3 19.331 3 17.797 3 14.727v-2.545c0-2.963 0-4.445.469-5.628c.754-1.903 2.348-3.403 4.37-4.113C9.095 2 10.668 2 13.818 2c1.798 0 2.698 0 3.416.252c1.155.406 2.066 1.263 2.497 2.35C20 5.278 20 6.125 20 7.818V10" />
+        <path d="M3 12a3.333 3.333 0 0 1 3.333-3.333c.666 0 1.451.116 2.098-.057A1.67 1.67 0 0 0 9.61 7.43c.173-.647.057-1.432.057-2.098A3.333 3.333 0 0 1 13 2" />
+      </g>
+    </svg>
+  );
+};
+
+export const MoreIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512" {...props}>
+      <path d="M113.7 304C86.2 304 64 282.6 64 256c0-26.5 22.2-48 49.7-48 27.6 0 49.8 21.5 49.8 48 0 26.6-22.2 48-49.8 48z" fill="currentColor" />
+      <path d="M256 304c-27.5 0-49.8-21.4-49.8-48 0-26.5 22.3-48 49.8-48 27.5 0 49.7 21.5 49.7 48 0 26.6-22.2 48-49.7 48z" fill="currentColor" />
+      <path d="M398.2 304c-27.5 0-49.8-21.4-49.8-48 0-26.5 22.2-48 49.8-48 27.5 0 49.8 21.5 49.8 48 0 26.6-22.2 48-49.8 48z" fill="currentColor" />
+    </svg>
+  );
+};
+
+export const SortIcon = (props: SVGProps<SVGSVGElement>) => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 21 21" {...props}>
+      <path fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" d="m10.5 12.5l4 4.107l4-4.107m-8-4l-4-4l-4 3.997m4-3.997v12m8-12v12" />
     </svg>
   );
 };
