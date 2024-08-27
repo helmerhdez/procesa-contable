@@ -1,10 +1,10 @@
 package com.hhcb.procesacontable.infrastructure.config;
 
-import com.hhcb.procesacontable.application.ports.input.user.UserDetailUseCasePort;
-import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.filter.CustomAccessDeniedHandler;
-import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.filter.CustomAuthenticationEntryPoint;
-import com.hhcb.procesacontable.infrastructure.adapter.input.rest.auth.filter.JwtAuthenticationFilter;
-import lombok.AllArgsConstructor;
+import com.hhcb.procesacontable.application.ports.output.UserPersistencePort;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.filter.CustomAccessDeniedHandler;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.filter.CustomAuthenticationEntryPoint;
+import com.hhcb.procesacontable.infrastructure.adapter.input.rest.filter.JwtAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,12 +17,17 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserDetailUseCasePort userDetailUseCase;
+    private final UserPersistencePort userPersistencePort;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
@@ -36,10 +41,11 @@ public class SecurityConfig {
                                 .permitAll()
                                 .anyRequest()
                                 .authenticated()
-                ).userDetailsService(userDetailUseCase)
+                ).userDetailsService(userPersistencePort)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors(cors -> cors.configurationSource(apiConfigurationSource()))
                 .exceptionHandling(ex -> ex.authenticationEntryPoint(customAuthenticationEntryPoint)
                         .accessDeniedHandler(customAccessDeniedHandler))
                 .build();
@@ -53,5 +59,14 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
+    }
+
+    private CorsConfigurationSource apiConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+        configuration.setAllowedMethods(List.of("*"));
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }
