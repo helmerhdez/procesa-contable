@@ -16,24 +16,24 @@ export const columns: ColumnDef<Payment>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "documentNumber",
+    header: "Número de documento",
   },
   {
-    accessorKey: "email",
+    accessorKey: "fileName",
     header: ({ column }) => {
       return (
         <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
-          Email
+          Nombre archivo
           <SortIcon className="ml-2 h-4 w-4" />
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    cell: ({ row }) => <div className="lowercase">{row.getValue("fileName")}</div>,
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "dateCreation",
+    header: "Fecha",
   },
   {
     id: "actions",

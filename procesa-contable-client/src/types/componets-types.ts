@@ -21,9 +21,12 @@ export type FileItemProps = {
 
 export type Payment = {
     id: string
-    amount: number
-    status: "pending" | "processing" | "success" | "failed"
-    email: string
+    documentNumber: string
+    fileName: string
+    dateCreation: Date
+    //amount: number
+    //status: "pending" | "processing" | "success" | "failed"
+    //email: string
 }
 
 export interface DataTableProps<TData, TValue> {
