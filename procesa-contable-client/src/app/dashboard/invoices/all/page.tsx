@@ -33,9 +33,8 @@ const InvoiceAllPage = () => {
   const uploadFile = () => {
     const formData = new FormData();
 
-    // Añadir los archivos al FormData usando el nombre 'file' para que coincida con el parámetro en .NET
     for (let i = 0; i < files.length; i++) {
-      formData.append("file", files[i]);
+      formData.append("files", files[i]);
     }
 
     try {
