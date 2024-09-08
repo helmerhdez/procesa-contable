@@ -18,18 +18,33 @@ const InvoiceAllPage = () => {
   const [currentList, setCurrentList] = useState<Payment[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5047/Bill/List?pageNumber=1&pageSize=1", {
-    })
+    fetch("http://localhost:5047/Bill/List?pageNumber=1&pageSize=1", {})
       .then((res) => {
-        console.log(res)
-        return res.json()
+        console.log(res);
+        return res.json();
       })
       .then((data) => {
-        console.log(data)
-        setCurrentList(data)
-        console.log(currentList)
-      })
-  }, [])
+        console.log(data);
+        setCurrentList(data);
+        console.log(currentList);
+      });
+  }, []);
+
+  const uploadFile = () => {
+    const formData = new FormData();
+
+    // Añadir los archivos al FormData usando el nombre 'file' para que coincida con el parámetro en .NET
+    for (let i = 0; i < files.length; i++) {
+      formData.append("file", files[i]);
+    }
+
+    try {
+      const response = fetch("http://localhost:5047/File/Bill", {
+        method: "POST",
+        body: formData,
+      });
+    } catch (Exc) {}
+  };
 
   const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: File[]) => {
     if (acceptedFiles?.length > 0) {
@@ -85,7 +100,14 @@ const InvoiceAllPage = () => {
                   Cerrar
                 </Button>
               </DialogClose>
-              <Button type="submit">Cargar</Button>
+              <Button
+                onClick={() => {
+                  uploadFile();
+                }}
+                type="submit"
+              >
+                Cargar
+              </Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
