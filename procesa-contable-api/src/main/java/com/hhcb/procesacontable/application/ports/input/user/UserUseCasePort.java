@@ -12,7 +12,7 @@ public interface UserUseCasePort {
 
     List<UserModel> findAll();
 
-    UserModel save(UserModel user);
+    Boolean save(UserModel user);
 
     UserModel update(String id, UserModel user);
 

@@ -9,5 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 public class CompanyModel {
     private String companyId;
+    private Long nit;
     private String name;
 }

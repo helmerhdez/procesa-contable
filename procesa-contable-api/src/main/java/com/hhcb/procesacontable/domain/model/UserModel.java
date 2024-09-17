@@ -14,5 +14,4 @@ public class UserModel {
     private String password;
     private CompanyModel company;
     private RoleModel role;
-    private String createdAt;
 }

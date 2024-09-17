@@ -37,10 +37,6 @@ public class UserEntity implements UserDetails {
     @Size(max = 255, message = "The name must have a maximum of 255 characters")
     private String name;
     @NotBlank(message = "Password cannot be blank")
-    @Size(min = 6, max = 255, message = "The password must be at least 6 characters")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%?&*\\-])[A-Za-z\\d@$!%?&*\\-]{6,}$",
-            message = "Password must contain at least one special character, one uppercase letter, " +
-                    "one lowercase letter, and one digit")
     private String password;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "company_id")
@@ -48,7 +44,6 @@ public class UserEntity implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
-    private Timestamp createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
