@@ -56,9 +56,14 @@ public class UserUseCase implements UserUseCasePort {
      * @return the user created
      */
     @Override
-    public UserModel save(UserModel user) {
+    public Boolean save(UserModel user) {
         log.info("Saving user with id {}", user.getUserId());
-        return persistencePort.save(user);
+        try {
+            persistencePort.save(user);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**

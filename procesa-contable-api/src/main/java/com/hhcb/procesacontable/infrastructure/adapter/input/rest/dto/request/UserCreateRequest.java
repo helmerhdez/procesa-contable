@@ -18,10 +18,7 @@ public class UserCreateRequest {
     @NotBlank(message = "The name cannot be blank")
     @Size(max = 255, message = "The name must have a maximum of 255 characters")
     private String name;
-    @Size(min = 6, max = 255, message = "The password must be at least 6 characters")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%?&*\\-])[A-Za-z\\d@$!%?&*\\-]{6,}$",
-            message = "Password must contain at least one special character, one uppercase letter, " +
-                    "one lowercase letter, and one digit")
+    @NotBlank(message = "The name cannot be blank")
     private String password;
     @NotNull
     private CompanyRequest company;

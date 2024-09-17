@@ -25,11 +25,15 @@ public class AuthenticationController {
     private final ModelMapper mapper;
 
     @PostMapping("/register")
-    public ResponseEntity<ApiResponse<AuthResponse>> register(
+    public ResponseEntity<ApiResponse<Boolean>> register (
             @Valid @RequestBody UserCreateRequest request) {
         UserModel userModel = mapper.map(request, UserModel.class);
-        AuthResponse response = mapper.map(authPort.register(userModel), AuthResponse.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(response));
+        boolean response = authPort.register(userModel);
+        if(response) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(true));
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.error(false));
+        }
     }
 
     @PostMapping("/login")
