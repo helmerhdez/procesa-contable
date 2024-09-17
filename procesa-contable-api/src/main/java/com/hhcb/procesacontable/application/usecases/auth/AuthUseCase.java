@@ -19,11 +19,9 @@ public class AuthUseCase implements AuthUseCasePort {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public AuthModel register(UserModel user) {
+    public Boolean register(UserModel user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        UserModel registeredUser = userUseCase.save(user);
-        registeredUser = userUseCase.findById(registeredUser.getUserId());
-        return AuthModel.builder().token(jwtUseCase.generateToken(registeredUser)).build();
+        return userUseCase.save(user);
     }
 
     public AuthModel authenticate(UserModel authUser) {

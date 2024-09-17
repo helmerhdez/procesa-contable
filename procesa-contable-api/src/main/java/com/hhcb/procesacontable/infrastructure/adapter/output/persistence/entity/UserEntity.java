@@ -44,7 +44,6 @@ public class UserEntity implements UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private RoleEntity role;
-    private Timestamp createdAt;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
