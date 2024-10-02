@@ -5,11 +5,12 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { DataTableProps } from "@/types/componets-types";
 import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 
-const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+const DataTable = <TData, TValue>({ columns, data, selectItem }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
+
   const table = useReactTable({
     data,
     columns,
@@ -23,6 +24,10 @@ const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
     getSortedRowModel: getSortedRowModel(),
     onRowSelectionChange: setRowSelection,
   });
+
+  useEffect(() => {
+    selectItem(table.getFilteredSelectedRowModel().rows);
+  }, [rowSelection, selectItem, table]);
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.value);
@@ -69,10 +74,10 @@ const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValu
         </div>
         <div className="space-x-2">
           <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            Previous
+            Anterior
           </Button>
           <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            Next
+            Siguiente
           </Button>
         </div>
       </div>

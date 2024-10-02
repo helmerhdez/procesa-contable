@@ -4,6 +4,7 @@ import { MoreIcon, SortIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { process } from "@/lib/data/invoices";
 import { Payment } from "@/types/componets-types";
 import { ColumnDef } from "@tanstack/react-table";
 
@@ -40,6 +41,12 @@ export const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => {
       const payment = row.original;
 
+      const proccessInvoice = () => {
+        const payments: Payment[] = [];
+        payments.push(payment);
+        process(payments);
+      };
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -50,9 +57,7 @@ export const columns: ColumnDef<Payment>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>Copy payment ID</DropdownMenuItem>
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => proccessInvoice()}>Procesar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

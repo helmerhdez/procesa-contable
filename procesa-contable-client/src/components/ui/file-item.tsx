@@ -17,12 +17,6 @@ const FileItem = ({ fileName, fileSize, index, deleteFile }: FileItemProps) => {
           <small className="text-[0.70rem] text-muted-foreground">{bytesToSize(fileSize)}</small>
         </div>
       </div>
-      <div className="w-full flex items-center">
-        <div className="w-[90%] h-1 rounded bg-background">
-          <div className="w-[50%] h-full bg-black rounded"></div>
-        </div>
-        <small className="text-[0.70rem] w-[10%] text-center">40%</small>
-      </div>
       <CrossIcon onClick={handleClick} className="absolute top-3 right-2 w-4 h-4 text-muted-foreground cursor-pointer" />
     </article>
   );

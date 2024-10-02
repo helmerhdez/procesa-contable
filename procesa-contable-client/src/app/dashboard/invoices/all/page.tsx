@@ -1,10 +1,11 @@
 "use client";
 import PageHeader from "@/components/header/PageHeader";
-import { DownloadIcon, UploadIcon } from "@/components/icons";
+import { StartCogIcon, UploadIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import DragAndDropZone from "@/components/ui/drag-and-drop-zone";
+import { fetchInvoicesByNit } from "@/lib/data/invoices";
 import { deleteItemWithIndexFromList, getFileExtension } from "@/lib/utils";
 import { Payment } from "@/types/componets-types";
 import { useCallback, useEffect, useState } from "react";
@@ -13,21 +14,22 @@ import { columns } from "./columns";
 
 const InvoiceAllPage = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const data: Payment[] = [];
-
-  const [currentList, setCurrentList] = useState<Payment[]>([]);
+  let dataSelected: Payment[] = [];
+  const [counterSelectedFiles, setCounterSelectedFiles] = useState<number>(0);
+  const [invoices, setInvoices] = useState<Payment[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:5047/Bill/List?pageNumber=1&pageSize=1", {})
-      .then((res) => {
-        console.log(res);
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setCurrentList(data);
-        console.log(currentList);
-      });
+    const fetchData = async () => {
+      try {
+        const data = await fetchInvoicesByNit(1, 1);
+        setInvoices(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+      }
+    };
+
+    fetchData();
   }, []);
 
   const uploadFile = () => {
@@ -58,12 +60,20 @@ const InvoiceAllPage = () => {
   }, []);
 
   const deleteFile = (fileId: number) => {
-    console.log("Items deleted");
     setFiles(deleteItemWithIndexFromList(files, fileId));
   };
 
   const clearItems = () => {
     setFiles([]);
+  };
+
+  const selectFile = (data: any[]) => {
+    setCounterSelectedFiles(data.length);
+    dataSelected = data.map((item) => item.original);
+  };
+
+  const proccessAllSelectedInvoices = () => {
+    //process(dataSelected);
   };
 
   return (
@@ -110,13 +120,13 @@ const InvoiceAllPage = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button className="mr-2">
-          <DownloadIcon className="w-4" />
-          <span className="mx-2">Descargar</span>
-          <small className="py-[1px] px-[8px] font-bold bg-accent rounded-full text-accent-foreground">0</small>
+        <Button onClick={() => proccessAllSelectedInvoices()} className="mr-2">
+          <StartCogIcon className="w-4" />
+          <span className="mx-2">Procesar</span>
+          <small className="py-[1px] px-[8px] font-bold bg-accent rounded-full text-accent-foreground">{counterSelectedFiles}</small>
         </Button>
       </PageHeader>
-      <DataTable columns={columns} data={currentList}></DataTable>
+      <DataTable columns={columns} data={invoices} selectItem={selectFile}></DataTable>
     </div>
   );
 };
