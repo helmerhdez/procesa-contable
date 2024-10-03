@@ -30,4 +30,4 @@ security:
     password: b65a6435-40e7-41cf-b2fd-d696708beb77
   jwt:
     secret-key: a950857d1d0fdad7c36530095af222585d990de583a5d2471d6df9bc43bde20f
-    expiration-time: 7200000
+    expiration-time: 86400000
