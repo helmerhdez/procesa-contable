@@ -1,3 +1,5 @@
+import { Product } from "./data/product-types"
+
 export type ChildrenType = {
     children: React.ReactNode
 }
@@ -17,4 +19,8 @@ export type PageParams = {
 export type PageTitleType = ChildrenType & {
     pageTitle: string,
     className: string
+}
+
+export type EditProductsDialogType = ChildrenType & {
+    products: Product[]
 }

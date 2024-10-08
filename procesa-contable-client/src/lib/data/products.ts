@@ -1,10 +1,9 @@
-import { Payment } from "@/types/componets-types";
-import { buildInvoicesByNitApiUrl, buildInvoicesSave } from "../accounting-api-constants";
+import { buildProductsApiUrl, buildSaveProductsApiUrl } from "@/lib/accounting-api-constants";
+import { Product } from "@/types/data/product-types";
 
-export const fetchInvoicesByNit = async (pageNumber: number, pageSize: number): Promise<Payment[]> => {
+export const fetchProductByInvoiceId = async (invoiceId: number) => {
     try {
-        console.log(process.env.ACCOUNTING_AUTOMATION_API_URL)
-        const response = await fetch(buildInvoicesByNitApiUrl(pageNumber, pageSize), {
+        const response = await fetch(buildProductsApiUrl(invoiceId), {
             credentials: 'include'
         });
 
@@ -18,16 +17,16 @@ export const fetchInvoicesByNit = async (pageNumber: number, pageSize: number): 
         console.error('Fetch failed: ', error);
         throw new Error('Failed to fetch invoices data.');
     }
-};
 
-export const fetchProcessInvoicesByIds = async (payment: number[]) => {
+}
+
+export const fetchProductsSave = async (products: Product[]) => {
     try {
-        console.log(process.env.ACCOUNTING_AUTOMATION_API_URL)
-        const response = await fetch(buildInvoicesSave(), {
+        const response = await fetch(buildSaveProductsApiUrl(), {
             headers: { "Content-Type": "application/json" },
             credentials: 'include',
             method: "POST",
-            body: JSON.stringify(payment)
+            body: JSON.stringify(products)
         });
 
         if (!response.ok) {
@@ -40,4 +39,5 @@ export const fetchProcessInvoicesByIds = async (payment: number[]) => {
         console.error('Fetch failed: ', error);
         throw new Error('Failed to fetch invoices data.');
     }
+
 }

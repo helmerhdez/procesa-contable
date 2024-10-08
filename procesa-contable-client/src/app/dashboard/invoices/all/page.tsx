@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import DragAndDropZone from "@/components/ui/drag-and-drop-zone";
-import { fetchInvoicesByNit } from "@/lib/data/invoices";
+import { fetchInvoicesByNit, fetchProcessInvoicesByIds } from "@/lib/data/invoices";
 import { deleteItemWithIndexFromList, getFileExtension } from "@/lib/utils";
 import { Payment } from "@/types/componets-types";
 import { useCallback, useEffect, useState } from "react";
@@ -14,7 +14,7 @@ import { columns } from "./columns";
 
 const InvoiceAllPage = () => {
   const [files, setFiles] = useState<File[]>([]);
-  let dataSelected: Payment[] = [];
+  let dataSelected: number[] = [];
   const [counterSelectedFiles, setCounterSelectedFiles] = useState<number>(0);
   const [invoices, setInvoices] = useState<Payment[]>([]);
 
@@ -40,7 +40,7 @@ const InvoiceAllPage = () => {
     }
 
     try {
-      const response = fetch("http://localhost:5047/File/Bill", {
+      const response = fetch(`${process.env.ACCOUNTING_AUTOMATION_API_URL}/File/Bill`, {
         method: "POST",
         body: formData,
       });
@@ -69,11 +69,17 @@ const InvoiceAllPage = () => {
 
   const selectFile = (data: any[]) => {
     setCounterSelectedFiles(data.length);
-    dataSelected = data.map((item) => item.original);
+    dataSelected = data.map((item) => item.original.id);
   };
 
-  const proccessAllSelectedInvoices = () => {
-    //process(dataSelected);
+  const proccessAllSelectedInvoices = async () => {
+    toast.promise(fetchProcessInvoicesByIds(dataSelected), {
+      loading: "Procesando las facturas seleccionadas...",
+      success: () => {
+        return `Facturas procesadas con éxito!`;
+      },
+      error: "Ocurrió un error al procesar las facturas.",
+    });
   };
 
   return (
@@ -120,7 +126,7 @@ const InvoiceAllPage = () => {
             </DialogFooter>
           </DialogContent>
         </Dialog>
-        <Button onClick={() => proccessAllSelectedInvoices()} className="mr-2">
+        <Button onClick={() => proccessAllSelectedInvoices()} disabled={!counterSelectedFiles} className="mr-2">
           <StartCogIcon className="w-4" />
           <span className="mx-2">Procesar</span>
           <small className="py-[1px] px-[8px] font-bold bg-accent rounded-full text-accent-foreground">{counterSelectedFiles}</small>
