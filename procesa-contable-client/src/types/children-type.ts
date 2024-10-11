@@ -16,7 +16,7 @@ export type PageParams = {
     item: string
 }
 
-export type PageTitleType = ChildrenType & {
+export type PageTitleType = {
     pageTitle: string,
     className: string
 }

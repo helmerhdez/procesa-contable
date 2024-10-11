@@ -1,18 +1,18 @@
 "use client";
+import { columns } from "@/app/dashboard/invoices/upload/columns";
 import PageHeader from "@/components/header/PageHeader";
 import { StartCogIcon, UploadIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import DragAndDropZone from "@/components/ui/drag-and-drop-zone";
-import { fetchInvoicesByNit, fetchProcessInvoicesByIds } from "@/lib/data/invoices";
+import { fetchInvoicesByNit, fetchInvoicesUpload, fetchProcessInvoicesByIds } from "@/lib/data/invoices";
 import { deleteItemWithIndexFromList, getFileExtension } from "@/lib/utils";
 import { Payment } from "@/types/componets-types";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
-import { columns } from "./columns";
 
-const InvoiceAllPage = () => {
+const InvoiceUploadPage = () => {
   const [files, setFiles] = useState<File[]>([]);
   let dataSelected: number[] = [];
   const [counterSelectedFiles, setCounterSelectedFiles] = useState<number>(0);
@@ -32,19 +32,20 @@ const InvoiceAllPage = () => {
     fetchData();
   }, []);
 
-  const uploadFile = () => {
+  const uploadFile = async () => {
     const formData = new FormData();
 
     for (let i = 0; i < files.length; i++) {
       formData.append("files", files[i]);
     }
 
-    try {
-      const response = fetch(`${process.env.ACCOUNTING_AUTOMATION_API_URL}/File/Bill`, {
-        method: "POST",
-        body: formData,
-      });
-    } catch (Exc) {}
+    toast.promise(fetchInvoicesUpload(formData), {
+      loading: "Cargando facturas...",
+      success: () => {
+        return `Facturas cargadas con éxito.`;
+      },
+      error: "Ocurrió un error al cargar las facturas",
+    });
   };
 
   const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: File[]) => {
@@ -84,7 +85,8 @@ const InvoiceAllPage = () => {
 
   return (
     <div className="px-4">
-      <PageHeader className="py-6 flex justify-between" pageTitle="Invoices - All">
+      <PageHeader className="py-6 flex justify-between" pageTitle="Facturas por Procesar" />
+      <DataTable columns={columns} data={invoices} selectItem={selectFile}>
         <Dialog>
           <DialogTrigger asChild>
             <Button className="mr-2">
@@ -131,10 +133,9 @@ const InvoiceAllPage = () => {
           <span className="mx-2">Procesar</span>
           <small className="py-[1px] px-[8px] font-bold bg-accent rounded-full text-accent-foreground">{counterSelectedFiles}</small>
         </Button>
-      </PageHeader>
-      <DataTable columns={columns} data={invoices} selectItem={selectFile}></DataTable>
+      </DataTable>
     </div>
   );
 };
 
-export default InvoiceAllPage;
+export default InvoiceUploadPage;

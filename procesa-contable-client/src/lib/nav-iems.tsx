@@ -13,8 +13,8 @@ export const NAV_ITEMS: NavItem[] = [
     icon: <InvoiceFilledIcon className="h-5 w-5" />,
     haveSubMenu: true,
     subitems: [
-      { title: "Todas", path: "/dashboard/invoices/all" },
-      { title: "Cargar", path: "/dashboard/invoices/upload" },
+      { title: "Cargar y procesar", path: "/dashboard/invoices/upload" },
+      { title: "Procesadas", path: "/dashboard/invoices/process" },
     ],
   },
 ];

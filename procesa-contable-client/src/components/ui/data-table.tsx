@@ -7,7 +7,7 @@ import { DataTableProps } from "@/types/componets-types";
 import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
 import { ChangeEvent, useEffect, useState } from "react";
 
-const DataTable = <TData, TValue>({ columns, data, selectItem }: DataTableProps<TData, TValue>) => {
+const DataTable = <TData, TValue>({ columns, data, selectItem, children }: DataTableProps<TData, TValue>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
@@ -35,8 +35,9 @@ const DataTable = <TData, TValue>({ columns, data, selectItem }: DataTableProps<
 
   return (
     <>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between py-4">
         <Input type="email" onChange={(event) => handleSearch(event)} placeholder="Buscar por email" className="max-w-sm" />
+        <div>{children}</div>
       </div>
       <div className="rounded-md border">
         <Table>

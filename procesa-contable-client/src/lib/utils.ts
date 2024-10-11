@@ -27,3 +27,9 @@ export const getFileExtension = (mimeType: string): string => {
   const [type, subtype] = mimeType.split('/');
   return subtype || type;
 };
+
+export const formatDate = (date: string | Date, local: string): string => {
+  return new Date(date).toLocaleString(local, {
+    hour12: true,
+  })
+}

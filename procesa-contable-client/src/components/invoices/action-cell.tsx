@@ -40,7 +40,7 @@ const ActionsCell = ({ payment }: { payment: Payment }) => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+        <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => handleProccessInvoice()}>Procesar</DropdownMenuItem>
         <EditProducts products={products}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Editar productos</DropdownMenuItem>

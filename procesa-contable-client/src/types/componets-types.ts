@@ -32,5 +32,6 @@ export type Payment = {
 export interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[],
-    selectItem: (data: any[]) => void
+    selectItem: (data: any[]) => void,
+    children?: React.ReactNode
 }
