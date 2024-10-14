@@ -3,11 +3,18 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { WAIT_BETWEEN_SEARCH } from "@/lib/constants";
 import { DataTableProps } from "@/types/componets-types";
 import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, SortingState, useReactTable } from "@tanstack/react-table";
+import Link from "next/link";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
-const DataTable = <TData, TValue>({ columns, data, selectItem, children }: DataTableProps<TData, TValue>) => {
+const DataTable = <TData, TValue>({ columns, data, selectItem, children, currentPage, totalPages }: DataTableProps<TData, TValue>) => {
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const { replace } = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [rowSelection, setRowSelection] = useState({});
 
@@ -29,14 +36,28 @@ const DataTable = <TData, TValue>({ columns, data, selectItem, children }: DataT
     selectItem(table.getFilteredSelectedRowModel().rows);
   }, [rowSelection, selectItem, table]);
 
-  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
+  const handleSearch = useDebouncedCallback((event: ChangeEvent<HTMLInputElement>) => {
+    const params = new URLSearchParams(searchParams);
+    const term: string = event.target.value;
+    if (term) {
+      params.set("query", term);
+    } else {
+      params.delete("query");
+    }
+    params.set("size", "1");
+    replace(`${pathName}?${params.toString()}`);
+  }, WAIT_BETWEEN_SEARCH);
+
+  const handlePagination = (page: string | number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    return `${pathName}?${params.toString()}`;
   };
 
   return (
     <>
       <div className="flex items-center justify-between py-4">
-        <Input type="email" onChange={(event) => handleSearch(event)} placeholder="Buscar por email" className="max-w-sm" />
+        <Input type="email" onChange={(event) => handleSearch(event)} defaultValue={searchParams.get("query")?.toString()} placeholder="Buscar por email" className="max-w-sm" />
         <div>{children}</div>
       </div>
       <div className="rounded-md border">
@@ -74,11 +95,11 @@ const DataTable = <TData, TValue>({ columns, data, selectItem, children }: DataT
           {table.getFilteredSelectedRowModel().rows.length} de {table.getFilteredRowModel().rows.length} fila(s) seleccionada(s).
         </div>
         <div className="space-x-2">
-          <Button variant="outline" size="sm" onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
-            Anterior
+          <Button variant="outline" size="sm" disabled={currentPage <= 1}>
+            <Link href={handlePagination(currentPage - 1)}>Anterior</Link>
           </Button>
-          <Button variant="outline" size="sm" onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
-            Siguiente
+          <Button variant="outline" size="sm" disabled={currentPage === totalPages}>
+            <Link href={handlePagination(currentPage + 1)}>Siguiente</Link>
           </Button>
         </div>
       </div>

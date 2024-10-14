@@ -34,4 +34,15 @@ export interface DataTableProps<TData, TValue> {
     data: TData[],
     selectItem: (data: any[]) => void,
     children?: React.ReactNode
+    currentPage: number
+    totalPages: number
 }
+
+export type SearchParams = {
+    query?: string;
+    page?: string;
+};
+
+export type PageProps = {
+    searchParams?: SearchParams;
+};

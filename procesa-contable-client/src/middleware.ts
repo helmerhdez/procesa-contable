@@ -1,5 +1,5 @@
+import { AUTH_ROUTES, COOKIE_JWT_TOKEN_NAME, DASHBOARD_ROUTE, LOGIN_ROUTE, PUBLIC_ROUTES } from "@/lib/constants";
 import { NextRequest } from "next/server";
-import { AUTH_ROUTES, COOKIE_JWT_TOKEN_NAME, DASHBOARD_ROUTE, LOGIN_ROUTE, PUBLIC_ROUTES } from "./lib/constants";
 
 export default async function middleware(req: NextRequest) {
     const { nextUrl } = req;

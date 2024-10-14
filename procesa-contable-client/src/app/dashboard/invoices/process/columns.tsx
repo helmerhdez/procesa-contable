@@ -4,7 +4,7 @@ import { MoreIcon, SortIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { fetchReportsDownload } from "@/lib/data/reports";
+import { generateZipOfReports } from "@/lib/data/reports";
 import { formatDate } from "@/lib/utils";
 import { Report } from "@/types/data/report-types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -45,15 +45,8 @@ export const columns: ColumnDef<Report>[] = [
       const handleDownload = async () => {
         const zip = new JSZip();
         try {
-          await Promise.all(
-            payment.fileNames.map(async (fileName: string) => {
-              const response = await fetchReportsDownload(fileName);
-              zip.file(fileName, response, { base64: true });
-            })
-          );
-
-          const content = await zip.generateAsync({ type: "blob" });
-          const url = window.URL.createObjectURL(content);
+          const zipBlob = await generateZipOfReports(payment.fileNames);
+          const url = window.URL.createObjectURL(zipBlob);
           const link = document.createElement("a");
           link.href = url;
           link.setAttribute("download", "Report - " + payment.id);

@@ -9,3 +9,7 @@ export const PUBLIC_ROUTES = ["/"];
 export const AUTH_ROUTES = [LOGIN_ROUTE];
 
 export const FILE_SIZES = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+
+export const WAIT_BETWEEN_SEARCH = 500
+
+export const PAGE_SIZE = 10

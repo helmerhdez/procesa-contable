@@ -6,22 +6,26 @@ import { Button } from "@/components/ui/button";
 import DataTable from "@/components/ui/data-table";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import DragAndDropZone from "@/components/ui/drag-and-drop-zone";
+import { PAGE_SIZE } from "@/lib/constants";
 import { fetchInvoicesByNit, fetchInvoicesUpload, fetchProcessInvoicesByIds } from "@/lib/data/invoices";
-import { deleteItemWithIndexFromList, getFileExtension } from "@/lib/utils";
-import { Payment } from "@/types/componets-types";
+import { deleteItemWithIndexFromList, getFileExtension, getTotalPages } from "@/lib/utils";
+import { ApiPagination } from "@/types/api-types";
+import { PageProps, Payment } from "@/types/componets-types";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-const InvoiceUploadPage = () => {
+const InvoiceUploadPage = ({ searchParams }: PageProps) => {
+  const currentPage = Number(searchParams?.page) || 1;
+  const query = searchParams?.query || "";
   const [files, setFiles] = useState<File[]>([]);
   let dataSelected: number[] = [];
   const [counterSelectedFiles, setCounterSelectedFiles] = useState<number>(0);
-  const [invoices, setInvoices] = useState<Payment[]>([]);
+  const [invoices, setInvoices] = useState<ApiPagination<Payment[]>>({ pageItems: [], count: 0 });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchInvoicesByNit(1, 1);
+        const data = await fetchInvoicesByNit(currentPage, PAGE_SIZE);
         setInvoices(data);
       } catch (error) {
         console.error(error);
@@ -30,7 +34,7 @@ const InvoiceUploadPage = () => {
     };
 
     fetchData();
-  }, []);
+  }, [currentPage]);
 
   const uploadFile = async () => {
     const formData = new FormData();
@@ -69,6 +73,7 @@ const InvoiceUploadPage = () => {
   };
 
   const selectFile = (data: any[]) => {
+    console.log(data);
     setCounterSelectedFiles(data.length);
     dataSelected = data.map((item) => item.original.id);
   };
@@ -86,7 +91,7 @@ const InvoiceUploadPage = () => {
   return (
     <div className="px-4">
       <PageHeader className="py-6 flex justify-between" pageTitle="Facturas por Procesar" />
-      <DataTable columns={columns} data={invoices} selectItem={selectFile}>
+      <DataTable columns={columns} data={invoices.pageItems} selectItem={selectFile} currentPage={currentPage} totalPages={getTotalPages(invoices.count, PAGE_SIZE)}>
         <Dialog>
           <DialogTrigger asChild>
             <Button className="mr-2">

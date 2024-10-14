@@ -1,7 +1,8 @@
+import { buildInvoicesByNitApiUrl, buildInvoicesSave, buildInvoicesUpload } from "@/lib/accounting-api-constants";
+import { ApiPagination } from "@/types/api-types";
 import { Payment } from "@/types/componets-types";
-import { buildInvoicesByNitApiUrl, buildInvoicesSave, buildInvoicesUpload } from "../accounting-api-constants";
 
-export const fetchInvoicesByNit = async (pageNumber: number, pageSize: number): Promise<Payment[]> => {
+export const fetchInvoicesByNit = async (pageNumber: number, pageSize: number): Promise<ApiPagination<Payment[]>> => {
     try {
         const response = await fetch(buildInvoicesByNitApiUrl(pageNumber, pageSize), {
             credentials: 'include'

@@ -1,4 +1,4 @@
-import { Product } from "./data/product-types"
+import { Product } from "@/types/data/product-types"
 
 export type ChildrenType = {
     children: React.ReactNode

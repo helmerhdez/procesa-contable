@@ -1,7 +1,7 @@
 "use client";
 
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChildrenType } from "@/types/children-type";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 
 export const CardWrapper = ({ children }: ChildrenType) => {
   return (

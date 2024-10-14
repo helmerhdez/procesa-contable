@@ -2,6 +2,9 @@
 
 import { CardWrapper } from "@/components/auth/CardWrapper";
 import { EyeFilledIcon, EyeSlashFilledIcon, MailIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { useAuth } from "@/context/AuthContext";
 import { DASHBOARD_ROUTE } from "@/lib/constants";
 import { LoginType } from "@/types/auth/auth-types";
@@ -11,9 +14,6 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Button } from "../ui/button";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
-import { Input } from "../ui/input";
 
 export const LoginForm = () => {
   const authContext = useAuth();

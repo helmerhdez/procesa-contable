@@ -1,6 +1,6 @@
+import { FILE_SIZES } from "@/lib/constants"
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { FILE_SIZES } from "./constants"
 
 export const cn = (...inputs: ClassValue[]) => {
   return twMerge(clsx(inputs))
@@ -32,4 +32,8 @@ export const formatDate = (date: string | Date, local: string): string => {
   return new Date(date).toLocaleString(local, {
     hour12: true,
   })
+}
+
+export const getTotalPages = (totalItems: number, pageSize: number): number => {
+  return Math.ceil(totalItems / pageSize);
 }

@@ -4,6 +4,11 @@ export type ApiResponse<T> = {
     error?: ErrorApiResponse
 }
 
+export type ApiPagination<T> = {
+    pageItems: T
+    count: number
+}
+
 type ErrorApiResponse = {
     code: string,
     status: number,
