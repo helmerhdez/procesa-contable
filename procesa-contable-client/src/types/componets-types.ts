@@ -20,7 +20,7 @@ export type FileItemProps = {
 }
 
 export type Payment = {
-    id: string
+    id: number
     documentNumber: string
     fileName: string
     dateCreation: Date

@@ -23,4 +23,5 @@ export type PageTitleType = {
 
 export type EditProductsDialogType = ChildrenType & {
     products: Product[]
+    fetchProducts: (paymentId: number) => void
 }

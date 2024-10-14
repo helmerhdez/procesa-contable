@@ -5,7 +5,6 @@ import JSZip from "jszip";
 
 export const fetchReportsByNit = async (pageNumber: number, pageSize: number): Promise<ApiPagination<Report[]>> => {
     try {
-        console.log(buildReportByNitApiUrl(pageNumber, pageSize))
         const response = await fetch(buildReportByNitApiUrl(pageNumber, pageSize), {
             credentials: 'include'
         });
@@ -44,7 +43,6 @@ export const generateZipOfReports = async (fileNames: string[]): Promise<Blob> =
     const zip = new JSZip();
 
     try {
-        console.log(fileNames)
         await Promise.all(
             fileNames.map(async (fileName: string) => {
                 const response = await fetchReportsDownload(fileName);

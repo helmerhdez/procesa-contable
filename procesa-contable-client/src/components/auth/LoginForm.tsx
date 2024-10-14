@@ -39,7 +39,7 @@ export const LoginForm = () => {
           router.push(DASHBOARD_ROUTE);
           return response?.success;
         } else {
-          throw new Error(response?.error || "Error desconocido");
+          throw new Error(response?.error || "Usuario y/o contraseña incorrectos");
         }
       },
       error: (err) => {

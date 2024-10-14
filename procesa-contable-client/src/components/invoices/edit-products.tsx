@@ -8,7 +8,7 @@ import { Product } from "@/types/data/product-types";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export const EditProducts = ({ children, products }: EditProductsDialogType) => {
+export const EditProducts = ({ children, products, fetchProducts }: EditProductsDialogType) => {
   const [newProducts, setNewProducts] = useState(products);
 
   const handleProductChange = (id: number, field: keyof Product, value: string) => {
@@ -16,13 +16,17 @@ export const EditProducts = ({ children, products }: EditProductsDialogType) => 
   };
 
   const handleSaveProducts = async () => {
-    toast.promise(fetchProductsSave(newProducts), {
-      loading: "Guardando...",
-      success: () => {
-        return `Guardado con exito`;
-      },
-      error: "Error al guardar. Vuelva a intentarlo",
-    });
+    const productSaves = newProducts.filter((product: Product) => product.isEdited);
+    if (productSaves.length > 0) {
+      toast.promise(fetchProductsSave(productSaves), {
+        loading: "Guardando...",
+        success: () => {
+          fetchProducts(productSaves[0].billId);
+          return `Guardado con exito`;
+        },
+        error: "Error al guardar. Vuelva a intentarlo",
+      });
+    }
   };
 
   return (
@@ -38,7 +42,7 @@ export const EditProducts = ({ children, products }: EditProductsDialogType) => 
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[30%]">Nombre factura</TableHead>
-                <TableHead className="w-[35%]">Usuario</TableHead>
+                <TableHead className="w-[35%]">Nombre usuario</TableHead>
                 <TableHead className="w-[35%]">Descripción</TableHead>
               </TableRow>
             </TableHeader>
@@ -64,7 +68,7 @@ export const EditProducts = ({ children, products }: EditProductsDialogType) => 
             </Button>
           </DialogClose>
           <Button type="submit" onClick={handleSaveProducts}>
-            Save changes
+            Guardar
           </Button>
         </DialogFooter>
       </DialogContent>

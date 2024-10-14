@@ -13,14 +13,12 @@ const ActionsCell = ({ payment }: { payment: Payment }) => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    fetchProductByInvoiceId(parseInt(payment.id)).then((result) => {
-      setProducts(result);
-    });
+    fetchProducts(payment.id);
   }, [payment.id]);
 
   const handleProccessInvoice = () => {
     const paymentIds: number[] = [];
-    paymentIds.push(parseInt(payment.id));
+    paymentIds.push(payment.id);
 
     toast.promise(fetchProcessInvoicesByIds(paymentIds), {
       loading: "Procesando las facturas seleccionadas...",
@@ -28,6 +26,12 @@ const ActionsCell = ({ payment }: { payment: Payment }) => {
         return `Facturas procesadas con éxito!`;
       },
       error: "Ocurrió un error al procesar las facturas.",
+    });
+  };
+
+  const fetchProducts = (paymentId: number) => {
+    fetchProductByInvoiceId(paymentId).then((result) => {
+      setProducts(result);
     });
   };
 
@@ -42,7 +46,7 @@ const ActionsCell = ({ payment }: { payment: Payment }) => {
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Acciones</DropdownMenuLabel>
         <DropdownMenuItem onClick={() => handleProccessInvoice()}>Procesar</DropdownMenuItem>
-        <EditProducts products={products}>
+        <EditProducts products={products} fetchProducts={fetchProducts}>
           <DropdownMenuItem onSelect={(e) => e.preventDefault()}>Editar productos</DropdownMenuItem>
         </EditProducts>
       </DropdownMenuContent>

@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { WAIT_BETWEEN_SEARCH } from "@/lib/constants";
 import { DataTableProps } from "@/types/componets-types";
@@ -56,8 +55,8 @@ const DataTable = <TData, TValue>({ columns, data, selectItem, children, current
 
   return (
     <>
-      <div className="flex items-center justify-between py-4">
-        <Input type="email" onChange={(event) => handleSearch(event)} defaultValue={searchParams.get("query")?.toString()} placeholder="Buscar por email" className="max-w-sm" />
+      <div className="flex items-center justify-end py-4">
+        {/* <Input type="email" onChange={(event) => handleSearch(event)} defaultValue={searchParams.get("query")?.toString()} placeholder="Buscar por email" className="max-w-sm" /> */}
         <div>{children}</div>
       </div>
       <div className="rounded-md border">

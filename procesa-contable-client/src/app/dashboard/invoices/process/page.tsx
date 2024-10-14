@@ -35,7 +35,6 @@ const InvoiceProcessPage = ({ searchParams }: PageProps) => {
 
   const handleDownload = async () => {
     try {
-      console.log(dataSelected);
       const zipBlob = await generateZipOfReports(dataSelected);
       const url = window.URL.createObjectURL(zipBlob);
       const link = document.createElement("a");
