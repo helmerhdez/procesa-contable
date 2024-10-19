@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.hhcb</groupId>
-	<artifactId>procesa-contable</artifactId>
+	<artifactId>procesa_contable</artifactId>
 	<version>0.0.1</version>
-	<name>procesa-contable</name>
+	<name>procesa_contable</name>
 	<description>ProcesaContable is a streamlined accounting software solution designed to simplify and streamline your company&apos;s financial management. It consists of two main projects: one developed in React for the frontend and another developed in Spring Boot for the backend.</description>
 	<properties>
 		<java.version>17</java.version>
@@ -36,6 +36,11 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>

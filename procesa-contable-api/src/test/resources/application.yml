@@ -5,20 +5,20 @@ spring:
     default-property-inclusion: non_null
     property-naming-strategy: SNAKE_CASE
   datasource:
-    url: ${DB_HOST}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${MYSQL_ROOT_PASSWORD}
-    password: ${MYSQL_PASSWORD}
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
   jpa:
     hibernate:
       dialect: org.hibernate.dialect.SQLServerDialect
-      ddl-auto: none
-    show-sql: true
+      ddl-auto: create-drop
+    show-sql: false
     properties:
       hibernate:
         format_sql: true
     database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.H2Dialect
   web:
     resources:
       add-mappings: false
@@ -27,7 +27,7 @@ logging:
     restClientLogger: WARN
 security:
   user:
-    password: ${USER_PASS}
+    password: secret
   jwt:
-    secret-key: ${JWT_SECRET_KEY}
-    expiration-time: ${JWT_EXPIRATION_TIME}
+    secret-key: secret
+    expiration-time: 123456789
