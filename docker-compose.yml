@@ -1,0 +1,75 @@
+services:
+  #API DE USUARIOS
+  procesa-contable-api:
+    image: procesa_contable_api
+    build: procesa-contable/procesa-contable-api
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: jdbc:mysql://procesacontable_bd:3307/procesacontable?createDatabaseIfNotExist=true&serverTimezone=UTC
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      JWT_EXPIRATION_TIME: 86400000
+      JWT_SECRET_KEY: a950857d1d0fdad7c36530095af222585d990de583a5d2471d6df9bc43bde20f
+      USER_PASS: b65a6435-40e7-41cf-b2fd-d696708beb77
+    restart: always
+    depends_on:
+      procesacontable_bd:
+        condition: service_healthy
+  #API DE AUTOMATIZACIÓN
+  accounting-automation-api:
+    image: accounting_automation_api
+    build: AccountingAutomation
+    ports:
+      - "5047:5047"
+    environment:
+      - DB_HOST=api_contable_bd
+      - DB_NAME=API_Contable
+      - DB_PORT=3308
+      - MYSQL_ROOT_PASSWORD=root
+      - ASPNETCORE_ENVIRONMENT=Development
+    restart: always
+    depends_on:
+      api_contable_bd:
+        condition: service_healthy
+  #APP FRONT END
+  procesa-contable-client:
+    image: procesa_contable_client
+    build: procesa-contable/procesa-contable-client
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PROCESA_CONTABLE_API_URL: http://procesa-contable-api:8080/api/v1
+      NEXT_PUBLIC_ACCOUNTING_AUTOMATION_API_URL: http://accounting-automation-api:5047
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+    depends_on:
+      - accounting-automation-api
+      - procesa-contable-api
+  #BASE DE DATOS DE USUARIOS
+  procesacontable_bd:
+    image: mysql:latest
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: procesacontable
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 15s
+      retries: 10
+  #BASE DE DATOS DE AUTOMATIZACIÓN
+  api_contable_bd:
+    image: mysql:latest
+    ports:
+      - "3308:3308"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: API_Contable
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 15s
+      retries: 10

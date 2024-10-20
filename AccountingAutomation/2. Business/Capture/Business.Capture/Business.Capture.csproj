@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus" Version="7.1.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\3. Data\Bills\Bills\Data.csproj" />
+    <ProjectReference Include="..\..\..\4. Models\Bills\Bills\Models.csproj" />
+    <ProjectReference Include="..\..\..\Business.Parametrization\Business.Parametrization.csproj" />
+  </ItemGroup>
+
+</Project>
