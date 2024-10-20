@@ -1,13 +1,13 @@
-export const BASE_ACCOUNTING_AUTOMATION_URL_API = "http://localhost:5047";
+export const BASE_ACCOUNTING_AUTOMATION_URL_API = process.env.NEXT_PUBLIC_ACCOUNTING_AUTOMATION_API_URL;
 
 export const buildInvoicesByNitApiUrl = (pageNumber: number, pageSize: number): string => {
+    console.log(BASE_ACCOUNTING_AUTOMATION_URL_API)
     return BASE_ACCOUNTING_AUTOMATION_URL_API + `/Bill/List?pageNumber=${pageNumber}&pageSize=${pageSize}`
 }
 
 export const buildInvoicesSave = (): string => {
     return BASE_ACCOUNTING_AUTOMATION_URL_API + `/Bill/Proccess`
 }
-
 
 export const buildInvoicesUpload = (): string => {
     return BASE_ACCOUNTING_AUTOMATION_URL_API + '/File/Bill'

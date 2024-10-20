@@ -12,6 +12,7 @@ export const login = async (values: LoginType): Promise<AuthActionType> => {
     if (!validatedFields.success) { return { error: "Campos no validos" } }
 
     try {
+        console.info("Start login flow")
         const response = await fetch(`${process.env.PROCESA_CONTABLE_API_URL}/auth/login`, {
             method: "POST",
             body: JSON.stringify(validatedFields.data),
@@ -26,6 +27,7 @@ export const login = async (values: LoginType): Promise<AuthActionType> => {
 
         const token = responseData.data?.token!;
         const tokenData = await getTokenPayload(token);
+        console.info("Finish login flow")
         cookies().set(COOKIE_JWT_TOKEN_NAME, token, { expires: new Date(tokenData?.exp! * 1000), httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' });
         return { success: "Inicio de sesión exitoso, redirigiendo...", user: tokenData! };
 
