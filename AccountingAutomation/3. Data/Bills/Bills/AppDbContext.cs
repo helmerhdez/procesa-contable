@@ -12,5 +12,7 @@ namespace Data
         public DbSet<Report> REPORTS { get; set; }
 
         public DbSet<ProductHomologation> PRODUCT_HOMOLOGATIONS { get; set; }
+
+        public DbSet<ReportFile> REPORT_FILES { get; set; }
     }
 }

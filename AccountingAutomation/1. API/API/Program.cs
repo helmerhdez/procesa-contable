@@ -23,7 +23,6 @@ namespace API
             builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
             builder.Services.AddTransient<BusinessBillCreate>();
-            builder.Services.AddTransient<BusinessBillGet>();
             builder.Services.AddTransient<BusinessBillProcces>();
             builder.Services.AddTransient<BusinessBillWorldOfficeGenerate>();
             builder.Services.AddTransient<BusinessBillWorldOfficeProcess>();
@@ -35,6 +34,7 @@ namespace API
             builder.Services.AddTransient<DataBills>();
             builder.Services.AddTransient<DataReports>();
             builder.Services.AddTransient<DataProductHomologation>();
+            builder.Services.AddTransient<DataReportFile>();
 
             builder.Services.AddTransient<UserHelper>();
 
