@@ -28,7 +28,7 @@ export const login = async (values: LoginType): Promise<AuthActionType> => {
         const token = responseData.data?.token!;
         const tokenData = await getTokenPayload(token);
         console.info("Finish login flow")
-        cookies().set(COOKIE_JWT_TOKEN_NAME, token, { expires: new Date(tokenData?.exp! * 1000), httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict' });
+        cookies().set(COOKIE_JWT_TOKEN_NAME, token, { expires: new Date(tokenData?.exp! * 1000), httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'none' });
         return { success: "Inicio de sesión exitoso, redirigiendo...", user: tokenData! };
 
     } catch (error) {
