@@ -37,7 +37,7 @@ namespace Business.Capture
 
             ReportFile reportFile = new ReportFile
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = $"{Guid.NewGuid().ToString()}.xlsx",
                 Json = JsonConvert.SerializeObject(billsWorldOffice),
                 TypeId = (Int32)ReportTypeEnum.WorldOfficeBill,
                 DateCreation = DateTime.Now
@@ -48,7 +48,7 @@ namespace Business.Capture
 
             reportFile = new ReportFile
             {
-                Id = Guid.NewGuid().ToString(),
+                Id = $"{Guid.NewGuid().ToString()}.xlsx",
                 Json = JsonConvert.SerializeObject(productsWOGenerate),
                 TypeId = (Int32)ReportTypeEnum.WorldOfficeProducts,
                 DateCreation = DateTime.Now

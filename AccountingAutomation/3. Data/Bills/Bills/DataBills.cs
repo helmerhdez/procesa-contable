@@ -23,7 +23,15 @@ namespace Data
 
         public List<Bill> GetListByNit(String nit)
         {
-            return appDbContext.BILLS.Where(b => b.Nit == nit).ToList();
+            return appDbContext.BILLS
+                .Where(b => b.Nit == nit)
+                .Select(b => new Bill
+                {
+                    Id = b.Id,
+                    Nit = b.Nit,
+                    DocumentNumber = b.DocumentNumber,
+                    DateCreation = b.DateCreation
+                }).ToList();
         }
 
         public Bill Create(Bill bill)
