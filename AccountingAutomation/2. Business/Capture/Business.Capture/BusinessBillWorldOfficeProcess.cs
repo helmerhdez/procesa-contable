@@ -1,7 +1,9 @@
 ﻿using API.Business;
 using API.Models.Consts;
 using API.Models.Deserialize;
+using Data;
 using Models;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 
 namespace Business.Capture
@@ -10,11 +12,15 @@ namespace Business.Capture
     {
         private readonly BusinessBillWorldOfficeGenerate businessBillWorldOfficeGenerate;
         private readonly BusinessProductWOParametricGenerate businessProductWOParametricGenerate;
+        private readonly DataReportFile dataReportFile;
 
-        public BusinessBillWorldOfficeProcess(BusinessBillWorldOfficeGenerate businessBillWorldOfficeGenerate, BusinessProductWOParametricGenerate businessProductWOParametricGenerate)
+        public BusinessBillWorldOfficeProcess(BusinessBillWorldOfficeGenerate businessBillWorldOfficeGenerate, 
+            BusinessProductWOParametricGenerate businessProductWOParametricGenerate,
+            DataReportFile dataReportFile)
         {
             this.businessBillWorldOfficeGenerate = businessBillWorldOfficeGenerate;
             this.businessProductWOParametricGenerate = businessProductWOParametricGenerate;
+            this.dataReportFile = dataReportFile;
         }
 
         public List<String> Procces(List<BillDeserialize> billDeserializes, String documentNumber)
@@ -29,29 +35,29 @@ namespace Business.Capture
                 productsWOGenerate.AddRange(businessProductWOParametricGenerate.Procces(billDeserialize.InvoiceLines!, documentNumber));
             }
 
-            fileNames.Add(saveFile(billsWorldOffice));
-            fileNames.Add(saveFile(productsWOGenerate));
+            ReportFile reportFile = new ReportFile
+            {
+                Id = Guid.NewGuid().ToString(),
+                Json = JsonConvert.SerializeObject(billsWorldOffice),
+                TypeId = (Int32)ReportTypeEnum.WorldOfficeBill,
+                DateCreation = DateTime.Now
+            };
+
+            dataReportFile.Create(reportFile);
+            fileNames.Add(reportFile.Id);
+
+            reportFile = new ReportFile
+            {
+                Id = Guid.NewGuid().ToString(),
+                Json = JsonConvert.SerializeObject(productsWOGenerate),
+                TypeId = (Int32)ReportTypeEnum.WorldOfficeProducts,
+                DateCreation = DateTime.Now
+            };
+
+            dataReportFile.Create(reportFile);
+            fileNames.Add(reportFile.Id);
 
             return fileNames;
-        }
-
-        private String saveFile<T>(List<T> list)
-        {
-            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
-            ExcelPackage excelPackage = new ExcelPackage();
-            ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets.Add("Hoja1");
-            excelWorksheet.Cells["A1"].LoadFromCollection(list, true);
-            excelPackage.Save();
-
-            String fileName = String.Concat(Guid.NewGuid().ToString(), ".xlsx");
-            String filePath = String.Concat(ConstantParameters.RootPath, fileName);
-
-            using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-            {
-                excelPackage.SaveAs(fileStream);
-            }
-
-            return fileName;
         }
     }
 }

@@ -16,8 +16,7 @@ namespace Models
         public String DocumentNumber { get; set; } = String.Empty;
 
         [Required]
-        [StringLength(50)]
-        public String FileName { get; set; } = String.Empty;
+        public String Json { get; set; } = String.Empty;
 
         [Required]
         public DateTime DateCreation { get; set; } = DateTime.MinValue;

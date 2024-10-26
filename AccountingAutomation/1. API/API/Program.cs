@@ -12,18 +12,11 @@ namespace API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            string? host = builder.Configuration["DB_HOST"] ?? builder.Configuration.GetConnectionString("DB_HOST");
-            string? dbName = builder.Configuration["DB_NAME"] ?? builder.Configuration.GetConnectionString("DB_NAME");
-            string? dbPort = builder.Configuration["DB_PORT"] ?? builder.Configuration.GetConnectionString("DB_PORT");
-            string? dbUser = builder.Configuration["MYSQL_ROOT_PASSWORD"] ?? builder.Configuration.GetConnectionString("MYSQL_ROOT_PASSWORD");
-            string? dbPass = builder.Configuration["MYSQL_ROOT_PASSWORD"] ?? builder.Configuration.GetConnectionString("MYSQL_PASSWORD");
-            
-            String connectionString = $"Server={host};Port={dbPort};DataBase={dbName};User={dbUser};Password={dbPass};SslMode=None;";
+            String connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 
             builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
             builder.Services.AddTransient<BusinessBillCreate>();
-            builder.Services.AddTransient<BusinessBillGet>();
             builder.Services.AddTransient<BusinessBillProcces>();
             builder.Services.AddTransient<BusinessBillWorldOfficeGenerate>();
             builder.Services.AddTransient<BusinessBillWorldOfficeProcess>();
@@ -35,6 +28,7 @@ namespace API
             builder.Services.AddTransient<DataBills>();
             builder.Services.AddTransient<DataReports>();
             builder.Services.AddTransient<DataProductHomologation>();
+            builder.Services.AddTransient<DataReportFile>();
 
             builder.Services.AddTransient<UserHelper>();
 
@@ -88,7 +82,7 @@ namespace API
 
             app.UseAuthentication();
 
-            app.UseMiddleware<Authorization>();
+            //app.UseMiddleware<Authorization>();
             app.UseAuthorization();
 
             app.MapControllers();

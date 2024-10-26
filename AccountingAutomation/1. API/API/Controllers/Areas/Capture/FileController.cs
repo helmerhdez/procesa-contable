@@ -1,7 +1,9 @@
-﻿using API.Models.Consts;
-using Business.Capture;
-using Microsoft.AspNetCore.Authorization;
+﻿using Business.Capture;
+using Data;
 using Microsoft.AspNetCore.Mvc;
+using Models;
+using Newtonsoft.Json;
+using OfficeOpenXml;
 
 namespace API.Controllers.Areas.Capture
 {
@@ -10,10 +12,13 @@ namespace API.Controllers.Areas.Capture
     public class FileController : Controller
     {
         private readonly BusinessBillCreate businessBillCreate;
+        private readonly DataReportFile dataReportFile;
 
-        public FileController(BusinessBillCreate businessBillCreate)
+        public FileController(BusinessBillCreate businessBillCreate,
+            DataReportFile dataReportFile)
         {
             this.businessBillCreate = businessBillCreate;
+            this.dataReportFile = dataReportFile;
         }
 
         [HttpPost]
@@ -21,9 +26,10 @@ namespace API.Controllers.Areas.Capture
         public IActionResult UploadBillFile(IFormFile[] files)
         {
             List<Int32> fileIds = new List<Int32>();
+
             try
             {
-                foreach (var file in files)
+                foreach (IFormFile file in files)
                 {
                     if (file == null || file.Length == 0 || Path.GetExtension(file.FileName) != ".xml")
                     {
@@ -31,14 +37,10 @@ namespace API.Controllers.Areas.Capture
                     }
                     else
                     {
-                        String fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName);
-                        String filePath = Path.Combine(ConstantParameters.RootPath, fileName);
-
-                        using (FileStream stream = new FileStream(filePath, FileMode.Create))
+                        using (Stream stream = file.OpenReadStream())
                         {
-                            file.CopyTo(stream);
+                            fileIds.Add(businessBillCreate.Create(stream));
                         }
-                        fileIds.Add(businessBillCreate.Create(fileName));
                     }
                 }
                 return Ok(fileIds);
@@ -84,21 +86,47 @@ namespace API.Controllers.Areas.Capture
         {
             try
             {
-                Byte[] fileBytes;
-                using (FileStream stream = new FileStream(Path.Combine(ConstantParameters.RootPath, fileName), FileMode.Open, FileAccess.Read))
+                ReportFile reportFile = dataReportFile.Get(fileName);
+
+                String base64 = String.Empty;
+
+                switch (reportFile.TypeId)
                 {
-                    using (MemoryStream memoryStream = new MemoryStream())
-                    {
-                        stream.CopyTo(memoryStream);
-                        fileBytes = memoryStream.ToArray();
-                    }
+                    case (Int32)ReportTypeEnum.WorldOfficeBill:
+                        base64 = createFile(JsonConvert.DeserializeObject<List<BillWorldOffice>>(reportFile.Json)!);
+                        break;
+                    case (Int32)ReportTypeEnum.WorldOfficeProducts:
+                        base64 = createFile(JsonConvert.DeserializeObject<List<ProductWOGenerate>>(reportFile.Json)!);
+                        break;
                 }
 
-                return Ok(Convert.ToBase64String(fileBytes));
+                if (!String.IsNullOrEmpty(base64))
+                {
+                    return Ok(base64);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, $"Ocurrió un error al leer el archivo");
+                }
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Ocurrió un error al leer el archivo: {ex.Message}");
+            }
+        }
+
+        private String createFile<T>(List<T> list)
+        {
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            ExcelPackage excelPackage = new ExcelPackage();
+            ExcelWorksheet excelWorksheet = excelPackage.Workbook.Worksheets.Add("Hoja1");
+            excelWorksheet.Cells["A1"].LoadFromCollection(list, true);
+
+            using (MemoryStream stream = new MemoryStream())
+            {
+                excelPackage.SaveAs(stream);
+
+                return Convert.ToBase64String(stream.ToArray());
             }
         }
     }

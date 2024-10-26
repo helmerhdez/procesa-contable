@@ -42,7 +42,7 @@ namespace API.Controllers.Areas.Capture
             List<Bill> bills = dataBills.GetListByNit(nit);
             Int32 count = bills.Count();
 
-            List<Bill> pageItems = bills.OrderBy(b => b.Id)
+            List<Bill> pageItems = bills.OrderByDescending(b => b.Id)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .ToList();

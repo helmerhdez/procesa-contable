@@ -2,19 +2,22 @@
 using API.Models.Deserialize;
 using Data;
 using Models;
+using Newtonsoft.Json;
 using System.Text.RegularExpressions;
 
 namespace Business.Capture
 {
     public class BusinessBillProcces : BusinessBase
     {
-        private readonly BusinessBillGet businessBillGet;
+        private readonly DataBills dataBills;
         private readonly BusinessBillWorldOfficeProcess businessBillWorldOfficeProcess;
         private readonly DataReports dataReports;
 
-        public BusinessBillProcces(BusinessBillGet businessBillGet, BusinessBillWorldOfficeProcess businessBillWorldOfficeProcess, DataReports dataReports)
+        public BusinessBillProcces(DataBills dataBills, 
+            BusinessBillWorldOfficeProcess businessBillWorldOfficeProcess, 
+            DataReports dataReports)
         {
-            this.businessBillGet = businessBillGet;
+            this.dataBills = dataBills;
             this.businessBillWorldOfficeProcess = businessBillWorldOfficeProcess;
             this.dataReports = dataReports;
         }
@@ -22,7 +25,10 @@ namespace Business.Capture
         public Report? Procces(List<Int32> billIds, String documentNumber)
         {
             List<String> fileNames = new List<String>();
-            List<BillDeserialize> billDeserializes = businessBillGet.GetList(billIds);
+
+            List<BillDeserialize> billDeserializes =
+                dataBills.GetListById(billIds)
+                .Select(b => JsonConvert.DeserializeObject<BillDeserialize>(b.Json)!).ToList();
 
             if (billDeserializes.Count > 0)
             {

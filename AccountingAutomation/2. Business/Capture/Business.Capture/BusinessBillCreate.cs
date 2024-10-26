@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using System.Xml;
 using System.Text.RegularExpressions;
 using Business.Parametrization;
+using Newtonsoft.Json;
 
 namespace Business.Capture
 {
@@ -22,10 +23,10 @@ namespace Business.Capture
             this.businessProductHomologationCreate = businessProductHomologationCreate;
         }
 
-        public Int32 Create(String fileName)
+        public Int32 Create(Stream stream)
         {
             Int32 result = 0;
-            XmlDocument xmlDoc = dataBillGetXml.Get(fileName);
+            XmlDocument xmlDoc = dataBillGetXml.Get(stream);
             XmlSerializer serializer = new XmlSerializer(typeof(BillDeserialize));
 
             XmlReader reader = new XmlNodeReader(xmlDoc);
@@ -35,10 +36,10 @@ namespace Business.Capture
             {
                 Bill bill = new Bill
                 {
-                    FileName = fileName,
                     Nit = billDeserialize.AccountingCustomerParty!.Party!.PartyLegalEntity!.CompanyID!.Value!,
                     DocumentNumber = (Regex.Match(billDeserialize!.Id!, @"\d+$").Value),
-                    DateCreation = DateTime.Now
+                    DateCreation = DateTime.Now,
+                    Json = JsonConvert.SerializeObject(billDeserialize)
                 };
 
                 dataBills.Create(bill);
@@ -50,5 +51,4 @@ namespace Business.Capture
             return result;
         }
     }
-
 }
