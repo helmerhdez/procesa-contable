@@ -1,8 +1,6 @@
 "use client";
 
-import { SortIcon } from "@/components/icons";
 import ActionsCell from "@/components/invoices/action-cell";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Payment } from "@/types/componets-types";
 import { ColumnDef } from "@tanstack/react-table";
@@ -19,7 +17,7 @@ export const columns: ColumnDef<Payment>[] = [
     accessorKey: "documentNumber",
     header: "Número de documento",
   },
-  {
+  /* {
     accessorKey: "fileName",
     header: ({ column }) => {
       return (
@@ -30,7 +28,7 @@ export const columns: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue("fileName")}</div>,
-  },
+  }, */
   {
     accessorKey: "dateCreation",
     header: "Fecha",
