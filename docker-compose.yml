@@ -2,11 +2,11 @@ services:
   #API DE USUARIOS
   procesa-contable-api:
     image: procesa_contable_api
-    build: procesa-contable/procesa-contable-api
+    build: procesa-contable-api
     ports:
       - "8080:8080"
     environment:
-      DB_HOST: jdbc:mysql://procesacontable_bd:3307/procesacontable?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_HOST: jdbc:mysql://procesacontable_bd:3306/procesacontable?createDatabaseIfNotExist=true&serverTimezone=UTC
       MYSQL_ROOT_PASSWORD: root
       MYSQL_PASSWORD: root
       JWT_EXPIRATION_TIME: 86400000
@@ -25,7 +25,7 @@ services:
     environment:
       - DB_HOST=api_contable_bd
       - DB_NAME=API_Contable
-      - DB_PORT=3308
+      - DB_PORT=3306
       - MYSQL_ROOT_PASSWORD=root
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always
@@ -35,13 +35,13 @@ services:
   #APP FRONT END
   procesa-contable-client:
     image: procesa_contable_client
-    build: procesa-contable/procesa-contable-client
+    build: procesa-contable-client
     ports:
       - "3000:3000"
     environment:
       NODE_ENV: production
       PROCESA_CONTABLE_API_URL: http://procesa-contable-api:8080/api/v1
-      NEXT_PUBLIC_ACCOUNTING_AUTOMATION_API_URL: http://accounting-automation-api:5047
+      NEXT_PUBLIC_ACCOUNTING_AUTOMATION_API_URL: https://accounting-automation-api:5047
       PORT: 3000
       HOSTNAME: 0.0.0.0
     depends_on:
@@ -51,7 +51,7 @@ services:
   procesacontable_bd:
     image: mysql:latest
     ports:
-      - "3307:3307"
+      - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: procesacontable
@@ -64,7 +64,7 @@ services:
   api_contable_bd:
     image: mysql:latest
     ports:
-      - "3308:3308"
+      - "3308:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: API_Contable

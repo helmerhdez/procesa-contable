@@ -17,8 +17,8 @@ namespace API
             string? dbPort = builder.Configuration["DB_PORT"] ?? builder.Configuration.GetConnectionString("DB_PORT");
             string? dbUser = builder.Configuration["MYSQL_ROOT_PASSWORD"] ?? builder.Configuration.GetConnectionString("MYSQL_ROOT_PASSWORD");
             string? dbPass = builder.Configuration["MYSQL_ROOT_PASSWORD"] ?? builder.Configuration.GetConnectionString("MYSQL_PASSWORD");
-            
-            String connectionString = $"Server={host};Port={dbPort};DataBase={dbName};User={dbUser};Password={dbPass};SslMode=None;";
+            String connectionString = $"Server={host}; Port={dbPort}; Database={dbName}; Uid={dbUser}; Pwd={dbPass};";
+            Console.WriteLine("Connection String: " + connectionString);
 
             builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
@@ -83,8 +83,6 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseAuthentication();
 
